@@ -1,9 +1,7 @@
-class Meter(val value: Double) extends AnyVal {
-  def +(other: Meter) = new Meter(value + other.value)
-}
+class Cell[+T](val value: T)
 
-object Demo {
-  val m = new Meter(1d)
-  val m2 = m + m
-  println(m2)
+object Cell {
+  Cell.of(1)
+
+  def of[T](value: T) = new Cell(value)
 }
