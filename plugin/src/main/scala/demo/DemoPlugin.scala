@@ -12,6 +12,13 @@ class DemoPlugin(val global: Global) extends Plugin {
 
   final case class OriginalTypeAttachment(tp: Type)
 
+  class PerRunData {
+    var postTyperTreeCount: Int = 0
+  }
+  val data = perRunCaches.newMap[Unit, PerRunData]()
+  def perRunData: PerRunData = data.getOrElseUpdate((), new PerRunData)
+  def treeCount = currentRun.units.flatMap(_.body.collect { case x => x}).size
+
   private object DemoTyperComponent extends PluginComponent {
     val global: DemoPlugin.this.global.type = DemoPlugin.this.global
     import global._
@@ -23,6 +30,11 @@ class DemoPlugin(val global: Global) extends Plugin {
     override def newPhase(prev: Phase): StdPhase = new StdPhase(prev) {
       override def apply(unit: CompilationUnit) {
         new DemoTraverser(unit) traverse unit.body
+      }
+
+      override def run(): Unit = {
+        super.run()
+        perRunData.postTyperTreeCount = treeCount
       }
     }
 
@@ -46,6 +58,11 @@ class DemoPlugin(val global: Global) extends Plugin {
       override def apply(unit: CompilationUnit) {
         new DemoTraverser(unit) traverse unit.body
       }
+
+      override def run(): Unit = {
+        super.run()
+        println((perRunData.postTyperTreeCount, treeCount))
+      }
     }
 
     class DemoTraverser(unit: CompilationUnit) extends Traverser {
@@ -53,7 +70,7 @@ class DemoPlugin(val global: Global) extends Plugin {
         tree match {
           case _ if tree.isTerm && !tree.isEmpty =>
             tree.attachments.get[OriginalTypeAttachment] match {
-              case Some(att) => println((tree, att.tp))
+              case Some(att) => //println((tree, att.tp))
               case None =>
             }
           case _ =>
