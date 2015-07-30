@@ -26,7 +26,7 @@ class DemoPlugin(val global: Global) extends Plugin {
 
     class DemoTraverser(unit: CompilationUnit) extends Traverser {
       override def traverse(tree: Tree): Unit = tree match {
-        case New(tpt) if afterTyper(tpt.tpe.typeSymbol.isDerivedValueClass) =>
+        case New(tpt) if exitingTyper(tpt.tpe.typeSymbol.isDerivedValueClass) =>
           unit.warning(tree.pos, s"Value class `${tpt.tpe.typeSymbol.fullName}` instantiated!")
         case _ =>
           super.traverse(tree)

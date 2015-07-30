@@ -9,7 +9,7 @@ object build extends Build {
   )
 
   lazy val sharedSettings = Seq(
-    scalaVersion := "2.10.1",
+    scalaVersion := "2.11.7",
     organization := "demo",
     name         := "boxer"
   )
