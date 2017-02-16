@@ -16,18 +16,19 @@ lazy val plugin = Project(
   id   = "plugin",
   base = file("plugin")
 ) settings (
-  libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _),
+  libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value,
   publishArtifact in Compile := false
 ) settings (sharedSettings : _*)
 
 // Scalac command line options to install our compiler plugin.
 lazy val usePluginSettings = Seq(
-  scalacOptions in Compile <++= (Keys.`package` in (plugin, Compile)) map { (jar: File) =>
-     val addPlugin = "-Xplugin:" + jar.getAbsolutePath
-     // add plugin timestamp to compiler options to trigger recompile of
-     // main after editing the plugin. (Otherwise a 'clean' is needed.)
-     val dummy = "-Jdummy=" + jar.lastModified
-     Seq(addPlugin, dummy)
+  scalacOptions in Compile ++= {
+    val jar = (Keys.`package` in (plugin, Compile)).value
+    val addPlugin = "-Xplugin:" + jar.getAbsolutePath
+    // add plugin timestamp to compiler options to trigger recompile of
+    // main after editing the plugin. (Otherwise a 'clean' is needed.)
+    val dummy = "-Jdummy=" + jar.lastModified
+    Seq(addPlugin, dummy)
   }
 )
 
