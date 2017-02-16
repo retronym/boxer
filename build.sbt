@@ -5,7 +5,7 @@ lazy val root = Project(
 )
 
 lazy val sharedSettings = Seq(
-  scalaVersion  := "2.11.8",
+  scalaVersion  := "2.12.1",
   organization  := "demo",
   name          := "boxer",
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint", "-Xfatal-warnings")
