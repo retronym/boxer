@@ -8,7 +8,7 @@ lazy val sharedSettings = Seq(
   scalaVersion  := "2.12.1",
   organization  := "demo",
   name          := "boxer",
-  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint", "-Xfatal-warnings")
+  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
 )
 
 // This subproject contains a Scala compiler plugin that checks for
@@ -18,7 +18,8 @@ lazy val plugin = Project(
   base = file("plugin")
 ) settings (
   libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value,
-  publishArtifact in Compile := false
+  publishArtifact in Compile := false,
+  scalacOptions += "-Xfatal-warnings"
 ) settings (sharedSettings : _*)
 
 // Scalac command line options to install our compiler plugin.
