@@ -1,4 +1,1 @@
-target
-.DS_Store
-.idea_modules
-.idea
+target/
