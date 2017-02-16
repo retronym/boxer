@@ -5,7 +5,7 @@ lazy val root = Project(
 )
 
 lazy val sharedSettings = Seq(
-  scalaVersion := "2.10.1",
+  scalaVersion := "2.10.6",
   organization := "demo",
   name         := "boxer"
 )
