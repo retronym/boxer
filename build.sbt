@@ -5,9 +5,10 @@ lazy val root = Project(
 )
 
 lazy val sharedSettings = Seq(
-  scalaVersion := "2.10.6",
-  organization := "demo",
-  name         := "boxer"
+  scalaVersion  := "2.11.8",
+  organization  := "demo",
+  name          := "boxer",
+  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint", "-Xfatal-warnings")
 )
 
 // This subproject contains a Scala compiler plugin that checks for
