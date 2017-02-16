@@ -11,9 +11,13 @@ in place, you can edit the plugin, run compile, and *immediately*
 see the results in the context of your project.
 
 ### What's inside
+
  - [SBT Project Definition](https://github.com/retronym/boxer/blob/master/project/build.scala)
  - Compiler Plugin [Descriptor](https://github.com/retronym/boxer/blob/master/plugin/src/main/resources/scalac-plugin.xml) and
 [Sources](https://github.com/retronym/boxer/blob/master/plugin/src/main/scala/demo/DemoPlugin.scala)
+
+The Scala version used is 2.12.x, but the same code also works in
+2.11.x.
 
 ### Sample Output
 
