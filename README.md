@@ -11,17 +11,20 @@ in place, you can edit the plugin, run compile, and *immediately*
 see the results in the context of your project.
 
 ### What's inside
+
  - [SBT Project Definition](https://github.com/retronym/boxer/blob/master/project/build.scala)
  - Compiler Plugin [Descriptor](https://github.com/retronym/boxer/blob/master/plugin/src/main/resources/scalac-plugin.xml) and
 [Sources](https://github.com/retronym/boxer/blob/master/plugin/src/main/scala/demo/DemoPlugin.scala)
 
+The Scala version used is 2.12.x, but the same code also works in
+2.11.x.
+
 ### Sample Output
 
-    [info] Compiling 1 Scala source to /Users/jason/code/boxer/plugin/target/scala-2.9.2/classes...
-    [info] Done updating.
-    [info] Packaging /Users/jason/code/boxer/plugin/target/scala-2.9.2/plugin_2.9.2-0.1-SNAPSHOT.jar ...
+    [info] Compiling 1 Scala source to /Users/jason/code/boxer/plugin/target/scala-2.12/classes...
+    [info] Packaging /Users/jason/code/boxer/plugin/target/scala-2.12/boxer_2.12-0.1-SNAPSHOT.jar ...
     [info] Done packaging.
-    [info] Compiling 1 Scala source to /Users/jason/code/boxer/main/target/scala-2.9.2/classes...
+    [info] Compiling 1 Scala source to /Users/jason/code/boxer/main/target/scala-2.12/classes...
     [warn] /Users/jason/code/boxer/main/src/main/scala/demo/Demo.scala:8: Value class `Meter` instantiated!
     [warn]   println(m2)
     [warn]           ^
