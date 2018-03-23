@@ -1,11 +1,10 @@
 lazy val root = Project(
   id = "root",
-  base = file("."),
-  aggregate = Seq(plugin, main)
-)
+  base = file(".")
+).aggregate(plugin, main)
 
 lazy val sharedSettings = Seq(
-  scalaVersion  := "2.12.1",
+  scalaVersion  := "2.12.4",
   organization  := "demo",
   name          := "boxer",
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
