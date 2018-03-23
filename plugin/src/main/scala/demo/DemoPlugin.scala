@@ -4,7 +4,6 @@ import scala.tools.nsc.{ Global, Phase }
 import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
 
 class DemoPlugin(val global: Global) extends Plugin {
-  import global._
 
   val name = "demo-plugin"
   val description = "Enforces coding standards"
