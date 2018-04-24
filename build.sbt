@@ -7,7 +7,7 @@ lazy val sharedSettings = Seq(
   scalaVersion  := "2.12.4",
   organization  := "demo",
   name          := "boxer",
-  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
+  scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 )
 
 // This subproject contains a Scala compiler plugin that checks for
@@ -37,4 +37,6 @@ lazy val usePluginSettings = Seq(
 lazy val main = Project(
   id   = "main",
   base = file("main")
-) settings (sharedSettings ++ usePluginSettings: _*)
+).settings(sharedSettings ++ usePluginSettings: _*).settings(
+  scalacOptions += "-Xprint:demo,fields,mixin"
+)

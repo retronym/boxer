@@ -1,35 +1,57 @@
 package demo
 
-import scala.tools.nsc.{ Global, Phase }
-import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
+import scala.reflect.internal.Flags
+import scala.tools.nsc.Global
+import scala.tools.nsc.plugins.{Plugin, PluginComponent}
+import scala.tools.nsc.transform.{Transform, TypingTransformers}
 
 class DemoPlugin(val global: Global) extends Plugin {
 
   val name = "demo-plugin"
-  val description = "Enforces coding standards"
+  val description = "Trait field injection"
   val components = List[PluginComponent](DemoComponent)
 
-  private object DemoComponent extends PluginComponent {
+  private object DemoComponent extends PluginComponent with Transform with TypingTransformers {
     val global = DemoPlugin.this.global
     import global._
 
-    override val runsAfter = List("erasure")
+    override val runsAfter = List("superaccessors")
+    override val runsBefore: List[String] = List("pickler")
+    val phaseName = "demo"
 
-    val phaseName = "Demo"
+    protected def newTransformer(unit: CompilationUnit): Transformer = {
+      new FieldTransformer(unit)
+    }
 
-    override def newPhase(prev: Phase): StdPhase = new StdPhase(prev) {
-      override def apply(unit: CompilationUnit) {
-        new DemoTraverser(unit) traverse unit.body
+    class FieldTransformer(unit: CompilationUnit) extends TypingTransformer(unit) {
+      override def transform(tree: Tree): Tree = {
+        tree match {
+          case templ: Template =>
+            val cls = templ.symbol.enclClass
+            if (cls.name.string_==("T")) {
+              val other = cls.info.decl(TermName("someVar"))
+              println(other.defString)
+              println(other.debugFlagString)
+              println(other.info)
+              println(templ.body.find(_.symbol == other).get.getClass)
+
+              val getterSym = cls.newMethodSymbol(TermName("foo$impl"), cls.pos.focus, newFlags = Flags.ACCESSOR)
+              getterSym.setInfoAndEnter(NullaryMethodType(definitions.IntTpe))
+              val getter = localTyper.typedPos(getterSym.pos.focus)(ValDef(getterSym, Literal(Constant(-42))))
+
+              val setterSym = cls.newMethodSymbol(getterSym.name.setterName, cls.pos.focus, newFlags = Flags.ACCESSOR)
+              val setterParams = setterSym.newSyntheticValueParams(definitions.IntTpe :: Nil)
+              setterSym.setInfoAndEnter(MethodType(setterParams, definitions.UnitTpe))
+              val setter = localTyper.typedPos(setterSym.pos.focus)(DefDef(setterSym, EmptyTree))
+
+              treeCopy.Template(templ, templ.parents, templ.self, templ.body ::: (getter :: setter :: Nil))
+            } else {
+              super.transform(templ)
+            }
+          case _ => super.transform(tree)
+        }
       }
     }
 
-    class DemoTraverser(unit: CompilationUnit) extends Traverser {
-      override def traverse(tree: Tree): Unit = tree match {
-        case New(tpt) if exitingTyper(tpt.tpe.typeSymbol.isDerivedValueClass) =>
-          reporter.warning(tree.pos, s"Value class `${tpt.tpe.typeSymbol.fullName}` instantiated!")
-        case _ =>
-          super.traverse(tree)
-      }
-    }
   }
 }
