@@ -4,7 +4,7 @@ lazy val root = Project(
 ).aggregate(plugin, main)
 
 lazy val sharedSettings = Seq(
-  scalaVersion  := "2.12.4",
+  scalaVersion  := "2.12.7",
   organization  := "demo",
   name          := "boxer",
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")

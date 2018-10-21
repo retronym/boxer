@@ -6,3 +6,13 @@ class SomeEntity {
   @node def y(a: String) = 42
   @node val unused = new Object
 }
+
+
+@entity
+class SomeEntity1 {
+  @node val x = 42
+  @node def y(a: String) = 42
+  @node val unused = new Object
+}
+
+object SomeEntity1
