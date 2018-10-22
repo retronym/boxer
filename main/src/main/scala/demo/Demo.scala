@@ -21,3 +21,5 @@ object Demo {
     assert(getter.invoke(d) == -1)
   }
 }
+
+class Lonely

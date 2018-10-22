@@ -9,7 +9,7 @@ class DemoPlugin(val global: Global) extends Plugin {
 
   val name = "demo-plugin"
   val description = "Trait field injection"
-  val components = List[PluginComponent](DemoComponent)
+  val components = List[PluginComponent](DemoComponent, DemoPreNamerComponent)
   import global._
 
   global.analyzer.addMacroPlugin(macroPlugin)
@@ -55,13 +55,14 @@ class DemoPlugin(val global: Global) extends Plugin {
                       val propSym = templateNamer.context.owner.newMethod(vdd.name, vdd.pos.focus, Flags.SYNTHETIC)
                       // Lazily compute the result type to allow for cycles between the entity class
                       // and an user-written companion
-                      propSym setInfo propTypeCompleter(vdd)
+                      propSym setInfo propTypeCompleter(vdd, cma.caseClass.symbol)
                       templateNamer.enterInScope(propSym)
                       templateNamer.context.unit.synthetics(propSym) = atPos(vdd.pos.focus)(DefDef(propSym, EmptyTree))
                       
                       // We'll fill in the body of the method after typer
                       propSym.updateAttachment(PropInfo)
                     }
+                  case t => t
                 }
               }
             }
@@ -73,11 +74,11 @@ class DemoPlugin(val global: Global) extends Plugin {
     }
   }
 
-  def propTypeCompleter(nodeDef: ValOrDefDef): analyzer.TypeCompleter = new PropTypeCompleter(nodeDef)
+  def propTypeCompleter(nodeDef: ValOrDefDef, companionClass: Symbol): analyzer.TypeCompleter = new PropTypeCompleter(nodeDef, companionClass)
 
-  class PropTypeCompleter(nodeDef: ValOrDefDef) extends analyzer.TypeCompleterBase[Tree](nodeDef) {
+  class PropTypeCompleter(nodeDef: ValOrDefDef, companionClass: Symbol) extends analyzer.TypeCompleterBase[Tree](nodeDef) {
     override def completeImpl(propSym: Symbol): Unit = {
-      val underlying = propSym.owner.companionClass.info.decl(propSym.name)
+      val underlying = companionClass.info.decl(propSym.name)
 
       def toFunction(tpe: Type): Type = tpe match {
         case NullaryMethodType(res) => toFunction(res)
@@ -105,7 +106,7 @@ class DemoPlugin(val global: Global) extends Plugin {
         tree match {
           case templ: Template =>
             val cls = templ.symbol.enclClass
-            if (cls.name.string_==("T")) {
+            if (cls.name.string_==("T") && cls.isTrait) {
 
               val getterSym = cls.newMethodSymbol(TermName("foo$impl"), cls.pos.focus, newFlags = Flags.ACCESSOR)
               getterSym.setInfoAndEnter(NullaryMethodType(definitions.IntTpe))
@@ -131,7 +132,34 @@ class DemoPlugin(val global: Global) extends Plugin {
         }
       }
     }
-
   }
 
+  private object DemoPreNamerComponent extends PluginComponent with Transform {
+    override val global: DemoPlugin.this.global.type = DemoPlugin.this.global
+    override val phaseName: String = "demo-pre-namer"
+    override val runsAfter: List[String] = List("parser")
+
+    protected def newTransformer(unit: CompilationUnit): Transformer = new PreNamerTransformer()
+
+    class PreNamerTransformer extends Transformer {
+      def addCompanions(stats: List[Tree]): List[Tree] = {
+        val modules: Set[TermName] = stats.collect { case ModuleDef(_, name, _) => name.toTermName }.toSet
+        val stats1 = stats.flatMap {
+          case cdef: ClassDef if !cdef.mods.isCase && !modules.contains(cdef.name.toTermName) =>
+            List(cdef, analyzer.companionModuleDef(cdef, Nil, Nil))
+          case t => List(t)
+        }
+        stats1
+      }
+      override def transform(tree: Tree): Tree = tree match {
+        case pd: PackageDef =>
+          treeCopy.PackageDef(pd, pd.pid, addCompanions(transformTrees(pd.stats)))
+        case Block(stats, expr) =>
+          treeCopy.Block(tree, addCompanions(transformTrees(stats)), transform(expr))
+        case Template(parents, self, body) =>
+          treeCopy.Template(tree, parents, self, addCompanions(transformTrees(body)))
+        case _ => super.transform(tree)
+      }
+    }
+  }
 }
