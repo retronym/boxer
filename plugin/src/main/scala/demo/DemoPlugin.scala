@@ -57,7 +57,7 @@ class DemoPlugin(val global: Global) extends Plugin {
                       // and an user-written companion
                       propSym setInfo propTypeCompleter(vdd, cma.caseClass.symbol)
                       templateNamer.enterInScope(propSym)
-                      templateNamer.context.unit.synthetics(propSym) = atPos(vdd.pos.focus)(DefDef(propSym, EmptyTree))
+                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, EmptyTree)(tpt = TypeTree())
                       
                       // We'll fill in the body of the method after typer
                       propSym.updateAttachment(PropInfo)
