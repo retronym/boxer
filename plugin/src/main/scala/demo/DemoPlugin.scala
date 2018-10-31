@@ -1,7 +1,7 @@
 package demo
 
 import scala.reflect.internal.Flags
-import scala.tools.nsc.Global
+import scala.tools.nsc.{Global, Mode}
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
 
@@ -21,8 +21,6 @@ class DemoPlugin(val global: Global) extends Plugin {
 
   case class EntityClassDefAttachment(caseClass: ClassDef)
 
-  object PropInfo
-
   object macroPlugin extends analyzer.MacroPlugin with analyzer.AnalyzerPlugin {
     override def isActive(): Boolean = phase.id <= currentRun.typerPhase.id
     override def pluginsEnterSym(namer: analyzer.Namer, tree: Tree): Boolean = {
@@ -38,6 +36,18 @@ class DemoPlugin(val global: Global) extends Plugin {
         case _ => false
       }
     }
+
+    override def pluginsMacroExpand(typer: analyzer.Typer, expandee: Tree, mode: Mode, pt: Type): Option[Tree] = {
+      if (expandee.symbol eq propInfoDummyMacro) {
+        typer.context.enclMethod.owner.info
+          val propInfoType = typer.context.enclMethod.owner.info.finalResultType.typeArgs.head
+          val cls = scala.reflect.reify.reifyRuntimeClass(global)(typer, propInfoType, true)
+          Some(typer.typedPos(expandee.pos.focus)(New(TypeInfoClass, Literal(Constant(propInfoType.toString)), cls)))
+      } else {
+        None
+      }
+    }
+
     override def pluginsTypeSig(tpe: Type, typer: analyzer.Typer, defTree: Tree, pt: Type): Type = defTree match {
       case tmpl: Template =>
         val templateNamer = typer.namer
@@ -57,10 +67,9 @@ class DemoPlugin(val global: Global) extends Plugin {
                       // and an user-written companion
                       propSym setInfo propTypeCompleter(vdd, cma.caseClass.symbol)
                       templateNamer.enterInScope(propSym)
-                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, EmptyTree)(tpt = TypeTree())
-                      
-                      // We'll fill in the body of the method after typer
-                      propSym.updateAttachment(PropInfo)
+                      // TODO: could we change `synthetics` to accept a `Type => Tree` function, rather than a `Tree`,
+                      // avoid the need to emit a macro call that we need to later intercept.
+                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, Ident(propInfoDummyMacro))(tpt = TypeTree())
                     }
                   case t => t
                 }
@@ -73,6 +82,8 @@ class DemoPlugin(val global: Global) extends Plugin {
         tpe
     }
   }
+
+  private lazy val propInfoDummyMacro = NoSymbol.newMethod(TermName("propInfoMacro"), NoPosition, Flags.MACRO).setInfo(NullaryMethodType(definitions.AnyRefTpe))
 
   def propTypeCompleter(nodeDef: ValOrDefDef, companionClass: Symbol): analyzer.TypeCompleter = new PropTypeCompleter(nodeDef, companionClass)
 
@@ -121,13 +132,6 @@ class DemoPlugin(val global: Global) extends Plugin {
             } else {
               super.transform(templ)
             }
-          case dd: DefDef if dd.symbol.hasAttachment[PropInfo.type] =>
-            val derived = deriveDefDef(dd) { _ =>
-              val propInfoType = dd.symbol.info.finalResultType.typeArgs.head
-              val cls = scala.reflect.reify.reifyRuntimeClass(global)(localTyper, propInfoType, true)
-              localTyper.typedPos(dd.pos.focus)(New(TypeInfoClass, Literal(Constant(propInfoType.toString)), cls))
-            }
-            derived
           case _ => super.transform(tree)
         }
       }
