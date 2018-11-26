@@ -29,7 +29,12 @@ class DemoPlugin(val global: Global) extends Plugin {
           val ctx = namer.standardEnterSym(tree)
           if (cd.mods.hasAnnotationNamed(EntityAnnotName)) {
             assert(!cd.mods.isCase, cd)
-            val m = namer.ensureCompanionObject(cd, global.analyzer.companionModuleDef(_))
+            def companionModuleDef1(cd: ClassDef) = {
+              val mod = global.analyzer.companionModuleDef(cd)
+              // workaround https://github.com/scala/scala/pull/7461
+              treeCopy.ModuleDef(mod, new Modifiers(mod.mods.flags, tpnme.EMPTY, mod.mods.annotations), mod.name, mod.impl)
+            }
+            val m = namer.ensureCompanionObject(cd, cd => companionModuleDef1(cd))
             m.moduleClass.updateAttachment(new EntityClassDefAttachment(cd))
           }
           true

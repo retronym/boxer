@@ -26,10 +26,12 @@ class SomeEntity {
 
 
 @entity
-class SomeEntity1 {
+private[demo] class SomeEntity1 {
   @node val x = 42
   @node def y(a: String) = 42
   @node val unused = new Object
 }
 
-object SomeEntity1
+object SomeEntity1 {
+  def publicity = 0
+}
