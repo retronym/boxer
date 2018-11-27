@@ -45,7 +45,7 @@ class DemoPlugin(val global: Global) extends Plugin {
     override def pluginsMacroExpand(typer: analyzer.Typer, expandee: Tree, mode: Mode, pt: Type): Option[Tree] = {
       if (expandee.symbol eq propInfoDummyMacro) {
         typer.context.enclMethod.owner.info
-          val propInfoType = typer.context.enclMethod.owner.info.finalResultType.typeArgs.head
+          val propInfoType = typer.context.owner.info.typeArgs.head
           val cls = scala.reflect.reify.reifyRuntimeClass(global)(typer, propInfoType, true)
           Some(typer.typedPos(expandee.pos.focus)(New(TypeInfoClass, Literal(Constant(propInfoType.toString)), cls)))
       } else {
@@ -67,14 +67,14 @@ class DemoPlugin(val global: Global) extends Plugin {
                 member match {
                   case vdd: ValOrDefDef =>
                     if (vdd.mods.hasAnnotationNamed(NodeAnnotName)) {
-                      val propSym = templateNamer.context.owner.newMethod(vdd.name, vdd.pos.focus, Flags.SYNTHETIC)
+                      val propSym = templateNamer.context.owner.newValue(vdd.name, vdd.pos.focus, Flags.SYNTHETIC)
                       // Lazily compute the result type to allow for cycles between the entity class
                       // and an user-written companion
                       propSym setInfo propTypeCompleter(vdd, cma.caseClass.symbol)
                       templateNamer.enterInScope(propSym)
                       // TODO: could we change `synthetics` to accept a `Type => Tree` function, rather than a `Tree`,
                       // avoid the need to emit a macro call that we need to later intercept.
-                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, Ident(propInfoDummyMacro))(tpt = TypeTree(), vparamss = Nil, tparams = Nil)
+                      templateNamer.context.unit.synthetics(propSym) = newValDef(propSym, Ident(propInfoDummyMacro))(tpt = TypeTree())
                     }
                   case t => t
                 }
@@ -102,7 +102,7 @@ class DemoPlugin(val global: Global) extends Plugin {
         case tp => tp // TODO error on PolyType, dependent method types.
       }
 
-      propSym.setInfo(NullaryMethodType(appliedType(TypeInfoClass, toFunction(underlying.info))))
+      propSym.setInfo(appliedType(TypeInfoClass, toFunction(underlying.info)))
     }
   }
 
