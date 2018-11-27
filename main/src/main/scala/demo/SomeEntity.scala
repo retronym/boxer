@@ -30,8 +30,10 @@ private[demo] class SomeEntity1 {
   @node val x = 42
   @node def y(a: String) = 42
   @node val unused = new Object
+  @node def nocycle = SomeEntity1.foo
 }
 
 object SomeEntity1 {
   def publicity = 0
+  def foo = 42
 }

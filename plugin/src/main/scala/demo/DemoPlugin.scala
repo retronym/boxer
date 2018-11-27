@@ -74,7 +74,7 @@ class DemoPlugin(val global: Global) extends Plugin {
                       templateNamer.enterInScope(propSym)
                       // TODO: could we change `synthetics` to accept a `Type => Tree` function, rather than a `Tree`,
                       // avoid the need to emit a macro call that we need to later intercept.
-                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, Ident(propInfoDummyMacro))(tpt = TypeTree())
+                      templateNamer.context.unit.synthetics(propSym) = newDefDef(propSym, Ident(propInfoDummyMacro))(tpt = TypeTree(), vparamss = Nil, tparams = Nil)
                     }
                   case t => t
                 }
