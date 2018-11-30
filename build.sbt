@@ -1,10 +1,10 @@
 lazy val root = Project(
   id = "root",
   base = file(".")
-).aggregate(plugin, main, macros, support)
+).aggregate(plugin, macros, support, useMacro, usePlugin)
 
 lazy val sharedSettings = Seq(
-  scalaVersion  := "2.12.4",
+  scalaVersion  := "2.12.8-bin-2e1cbe9-SNAPSHOT",
   organization  := "demo",
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
 )
@@ -50,8 +50,21 @@ lazy val usePluginSettings = Seq(
   }
 )
 
-// A regular module with the application code.
-lazy val main = Project(
-  id   = "main",
-  base = file("main")
-).dependsOn(support, macros).settings (sharedSettings ++ usePluginSettings: _*)
+lazy val usePlugin = Project(
+  id   = "use-plugin",
+  base = file("use-plugin")
+).dependsOn(support)
+  .settings (sharedSettings ++ usePluginSettings: _*)
+
+lazy val useMacro = Project(
+  id   = "use-macro",
+  base = file("use-macro")
+).dependsOn(support, macros).settings (sharedSettings: _*)
+  .settings(  {
+    def includeOnMacroClasspath(element: sbt.Attributed[java.io.File]): Boolean = {
+      val fileName = element.data.getAbsolutePath
+      fileName.contains("macros")
+    }
+    scalacOptions in Compile ++= List("-Ymacro-classpath", (internalDependencyClasspath in Compile).value.filter(includeOnMacroClasspath).map(_.data.toString).mkString(java.io.File.pathSeparator))
+  }
+)

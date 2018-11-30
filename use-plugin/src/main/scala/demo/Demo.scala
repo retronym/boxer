@@ -7,8 +7,3 @@ object Demo {
   val m2 = m + m
   println(m2)
 }
-
-object UseMacro {
-  println(demo.macros.Macros.macrotopia)
-  new demo.support.Support().foo
-}
