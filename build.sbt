@@ -1,12 +1,11 @@
 lazy val root = Project(
   id = "root",
   base = file(".")
-).aggregate(plugin, main)
+).aggregate(plugin, main, macros, support)
 
 lazy val sharedSettings = Seq(
   scalaVersion  := "2.12.4",
   organization  := "demo",
-  name          := "boxer",
   scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
 )
 
@@ -21,11 +20,29 @@ lazy val plugin = Project(
   scalacOptions += "-Xfatal-warnings"
 ) settings (sharedSettings : _*)
 
+// This subproject contains a macro definition
+lazy val macros = Project(
+  id   = "macros",
+  base = file("macros")
+) settings (
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+  scalacOptions += "-Xfatal-warnings"
+) settings (sharedSettings : _*)
+
+lazy val support = Project(
+  id   = "support",
+  base = file("support")
+) settings (
+  scalacOptions += "-Xfatal-warnings"
+) settings (sharedSettings : _*)
+
+
 // Scalac command line options to install our compiler plugin.
 lazy val usePluginSettings = Seq(
   scalacOptions in Compile ++= {
+    val classDir = (Keys.classDirectory in (plugin, Compile)).value
     val jar = (Keys.`package` in (plugin, Compile)).value
-    val addPlugin = "-Xplugin:" + jar.getAbsolutePath
+    val addPlugin = "-Xplugin:" + classDir.getAbsolutePath
     // add plugin timestamp to compiler options to trigger recompile of
     // main after editing the plugin. (Otherwise a 'clean' is needed.)
     val dummy = "-Jdummy=" + jar.lastModified
@@ -37,4 +54,4 @@ lazy val usePluginSettings = Seq(
 lazy val main = Project(
   id   = "main",
   base = file("main")
-) settings (sharedSettings ++ usePluginSettings: _*)
+).dependsOn(support, macros).settings (sharedSettings ++ usePluginSettings: _*)
