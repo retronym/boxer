@@ -179,7 +179,7 @@ class DemoPlugin(val global: Global) extends Plugin {
     override val runsAfter: List[String] = List("refchecks")
 
     protected def newTransformer(unit: CompilationUnit): Transformer = new MethodSplitterTransformer(unit)
-    private val needTrees = collection.mutable.AnyRefMap[Symbol, Symbol]()
+    private val needTrees = perRunCaches.newAnyRefMap[Symbol, Symbol]()
 
     override def transformInfo(sym: Symbol, tpe: Type): Type = {
       tpe match {
