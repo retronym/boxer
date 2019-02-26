@@ -215,11 +215,10 @@ class DemoPlugin(val global: Global) extends Plugin {
           val newBody = ListBuffer[Tree]()
           var changed = false
           for (tree <- body) {
-
               newBody += tree
             tree match {
               case _: DefTree =>
-                needTrees.remove(tree.symbol) match {
+                needTrees.get(tree.symbol) match {
                   case Some(forwarder) =>
                     val target = tree.symbol
                     changed = true
@@ -232,6 +231,12 @@ class DemoPlugin(val global: Global) extends Plugin {
             }
           }
           treeCopy.Template(tree, parents, self, transformTrees(if (changed) newBody.result() else body))
+        case sel @ Select(qual, _) =>
+          needTrees.get(sel.symbol) match {
+            case Some(forwarder) => sel.setSymbol(forwarder)
+            case _ =>
+          }
+          super.transform(sel)
         case _ =>
           super.transform(tree)
       }
