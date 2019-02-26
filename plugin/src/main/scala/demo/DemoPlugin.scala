@@ -1,15 +1,16 @@
 package demo
 
+import scala.collection.mutable.ListBuffer
 import scala.reflect.internal.Flags
 import scala.tools.nsc.{Global, Mode}
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
-import scala.tools.nsc.transform.{Transform, TypingTransformers}
+import scala.tools.nsc.transform.{InfoTransform, Transform, TypingTransformers}
 
 class DemoPlugin(val global: Global) extends Plugin {
 
   val name = "demo-plugin"
   val description = "Trait field injection"
-  val components = List[PluginComponent](DemoComponent, DemoPreNamerComponent)
+  val components = List[PluginComponent](DemoComponent, DemoPreNamerComponent, DemoMethodSplitterComponent)
   import global._
 
   global.analyzer.addMacroPlugin(macroPlugin)
@@ -168,6 +169,71 @@ class DemoPlugin(val global: Global) extends Plugin {
         case Template(parents, self, body) =>
           treeCopy.Template(tree, parents, self, addCompanions(transformTrees(body)))
         case _ => super.transform(tree)
+      }
+    }
+  }
+
+  private object DemoMethodSplitterComponent extends PluginComponent with InfoTransform with TypingTransformers {
+    override val global: DemoPlugin.this.global.type = DemoPlugin.this.global
+    override val phaseName: String = "demo-method-splitter"
+    override val runsAfter: List[String] = List("refchecks")
+
+    protected def newTransformer(unit: CompilationUnit): Transformer = new MethodSplitterTransformer(unit)
+    private val needTrees = collection.mutable.AnyRefMap[Symbol, Symbol]()
+
+    override def transformInfo(sym: Symbol, tpe: Type): Type = {
+      tpe match {
+        case GenPolyType(tparams, ClassInfoType(parents, decls, sym)) =>
+          val newDecls = newScope
+          var changed = false
+          for (decl <- tpe.decls) {
+            if (decl.isMethod && decl.annotations.exists(_.symbol.name.string_==("node"))) {
+              changed = true
+              val forwarder = decl.cloneSymbol
+              needTrees(decl) = forwarder
+              decl.setName(decl.name.append("$split"))
+              newDecls.enter(forwarder)
+              newDecls.enter(decl)
+              println(decl.name)
+            } else {
+              newDecls.enter(decl)
+            }
+          }
+          if (changed) {
+            GenPolyType(tparams, ClassInfoType(parents, newDecls, sym))
+          } else tpe
+        case _ =>
+          tpe
+      }
+    }
+
+    class MethodSplitterTransformer(unit: CompilationUnit) extends TypingTransformer(unit) {
+      override def transform(tree: Tree): Tree = tree match {
+        case tmpl @ Template(parents, self, body) =>
+          afterOwnPhase(currentOwner.info)
+
+          val newBody = ListBuffer[Tree]()
+          var changed = false
+          for (tree <- body) {
+
+              newBody += tree
+            tree match {
+              case _: DefTree =>
+                needTrees.remove(tree.symbol) match {
+                  case Some(forwarder) =>
+                    val target = tree.symbol
+                    changed = true
+                    val callPrefix = gen.mkAttributedSelect(This(currentOwner), target)
+                    val rhs = gen.mkForwarder(callPrefix, forwarder.paramss)
+                    newBody += localTyper.typedPos(forwarder.pos)(DefDef(forwarder, rhs))
+                  case None =>
+                }
+              case _ =>
+            }
+          }
+          treeCopy.Template(tree, parents, self, transformTrees(if (changed) newBody.result() else body))
+        case _ =>
+          super.transform(tree)
       }
     }
   }

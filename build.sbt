@@ -38,5 +38,5 @@ lazy val main = Project(
   id   = "main",
   base = file("main")
 ).settings(sharedSettings ++ usePluginSettings: _*).settings(
-  scalacOptions += "-Xprint:demo,fields,mixin"
+  scalacOptions += "-Xprint:demo-method-splitter"
 )
