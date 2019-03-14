@@ -8,8 +8,8 @@ import scala.tools.nsc.transform.{InfoTransform, TypingTransformers}
 class DemoPlugin(val global: Global) extends Plugin {
 
   val name = "demo-plugin"
-  val description = "Creates sibling methods"
-  val components = List[PluginComponent](DemoMethodSplitterComponent)
+  val description = "CPS transform demo"
+  val components = List[PluginComponent](CpsComponent)
   import global._
   import definitions._
 
@@ -17,12 +17,12 @@ class DemoPlugin(val global: Global) extends Plugin {
   private val NodeAnnotName = TypeName("node")
   private lazy val TypeInfoClass = rootMirror.staticClass("demo.TypeInfo")
 
-  private object DemoMethodSplitterComponent extends PluginComponent with InfoTransform with TypingTransformers {
+  private object CpsComponent extends PluginComponent with InfoTransform with TypingTransformers {
     override val global: DemoPlugin.this.global.type = DemoPlugin.this.global
     override val phaseName: String = "demo-method-splitter"
     override val runsAfter: List[String] = List("refchecks")
 
-    protected def newTransformer(unit: CompilationUnit): Transformer = new MethodSplitterTransformer(unit)
+    protected def newTransformer(unit: CompilationUnit): Transformer = new CpsTransformer(unit)
     private val needTrees = perRunCaches.newAnyRefMap[Symbol, Symbol]()
     private val contName = newTermName("$cont")
 
@@ -44,7 +44,8 @@ class DemoPlugin(val global: Global) extends Plugin {
               val impl = decl.cloneSymbol(decl.owner, decl.flags, decl.name.append("$impl"))
 
               def cps(tp: Type): Type = {
-                def contParam(restpe: Type) = decl.newSyntheticValueParam(functionType(restpe :: Nil, UnitTpe), contName).setPos(decl.pos)
+                def contParam(restpe: Type) =
+                  decl.newSyntheticValueParam(functionType(restpe :: Nil, UnitTpe), contName).setPos(decl.pos)
                 tp match {
                   case PolyType(tparams, restpe) =>
                     PolyType(tparams, restpe)
@@ -66,7 +67,6 @@ class DemoPlugin(val global: Global) extends Plugin {
 
               newDecls.enter(decl)
               newDecls.enter(impl)
-              println(decl.name)
             } else {
               newDecls.enter(decl)
             }
@@ -81,7 +81,17 @@ class DemoPlugin(val global: Global) extends Plugin {
       }
     }
 
-    class MethodSplitterTransformer(unit: CompilationUnit) extends TypingTransformer(unit) {
+    /** Adds CPS-transformed sibling methods
+      * ```
+      * @demo.split def foo(x: Int): Int = x.+(1);
+      * @demo.split def foo$impl(x: Int, $cont: Int => Unit): Unit;
+      * @demo.split def bar(x: Int)(y: Int): Int = x.+(y);
+      * @demo.split def bar$impl(x: Int)(y: Int, $cont: Int => Unit): Unit;
+      * @demo.split def baz: Nothing = scala.Predef.???;
+      * @demo.split def baz$impl($cont: Nothing => Unit): Unit
+      * ```
+      */
+    class CpsTransformer(unit: CompilationUnit) extends TypingTransformer(unit) {
       override def transform(tree: Tree): Tree = tree match {
         case tmpl@Template(parents, self, body) =>
           afterOwnPhase(currentOwner.info)
@@ -101,7 +111,6 @@ class DemoPlugin(val global: Global) extends Plugin {
               case _ =>
             }
           }
-          println((changed, newBody))
           treeCopy.Template(tree, parents, self, transformTrees(if (changed) newBody.result() else body))
         case _ =>
           super.transform(tree)
