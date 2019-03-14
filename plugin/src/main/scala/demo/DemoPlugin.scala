@@ -74,8 +74,6 @@ class DemoPlugin(val global: Global) extends Plugin {
           if (changed) {
             GenPolyType(tparams, ClassInfoType(parents, newDecls, sym))
           } else tpe
-        case GenPolyType(tparams, mt) if sym.annotations.exists(_.symbol.name.string_==("split")) =>
-          mt.cloneInfo(sym)
         case _ =>
           tpe
       }
