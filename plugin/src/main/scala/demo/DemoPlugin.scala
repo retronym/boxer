@@ -20,7 +20,9 @@ class DemoPlugin(val global: Global) extends Plugin {
   private object CpsComponent extends PluginComponent with InfoTransform with TypingTransformers {
     override val global: DemoPlugin.this.global.type = DemoPlugin.this.global
     override val phaseName: String = "demo-method-splitter"
-    override val runsAfter: List[String] = List("refchecks")
+
+    override val runsAfter: List[String] = List("typer")
+    override val runsBefore: List[String] = List("refchecks") // to demonstrate absense of ill-bounded type applications ala https://github.com/scala/bug/issues/11383
 
     protected def newTransformer(unit: CompilationUnit): Transformer = new CpsTransformer(unit)
     private val needTrees = perRunCaches.newAnyRefMap[Symbol, Symbol]()
@@ -41,7 +43,15 @@ class DemoPlugin(val global: Global) extends Plugin {
           for (decl <- tpe.decls) {
             if (decl.isMethod && decl.annotations.exists(_.symbol.name.string_==("split"))) {
               changed = true
+              val declInfo = decl.info
+
+              // Clone all but the type of decl, we'll use the uncloned decl.info as the info of
+              // impl to avoid the need to perform substitutions through the RHS.
+              decl.setInfo(NoType)
               val impl = decl.cloneSymbol(decl.owner, decl.flags, decl.name.append("$impl"))
+
+              // Give decl a clone of its former info
+              decl.setInfo(declInfo.cloneInfo(decl))
 
               def cps(tp: Type): Type = {
                 def contParam(restpe: Type) =
@@ -60,7 +70,26 @@ class DemoPlugin(val global: Global) extends Plugin {
                   case _ => tp
                 }
               }
-              impl.modifyInfo(cps)
+              class ChangeOwner(oldowner: Symbol, newowner: Symbol) extends TypeTraverser {
+                final def change(sym: Symbol): Unit = {
+                  if (sym != NoSymbol && sym.owner == oldowner) {
+                    sym.owner = newowner
+                    if (sym.isModule) sym.moduleClass.owner = newowner
+                  }
+                }
+                override def traverse(tp: Type): Unit = {
+                  tp match {
+                    case PolyType(qs, res) => qs.foreach(change)
+                    case MethodType(ps, _) => ps.foreach(change)
+                    case ExistentialType(qs, _) => qs.foreach(change)
+                    case _ =>
+                  }
+                  mapOver(tp)
+                }
+              }
+              val changeOwner = new ChangeOwner(decl, impl)
+              changeOwner(declInfo)
+              impl.setInfo(cps(declInfo))
 
               if (currentRun.compiles(sym))
                 needTrees(decl) = impl // notify the tree transformer
@@ -97,16 +126,22 @@ class DemoPlugin(val global: Global) extends Plugin {
           val newBody = ListBuffer[Tree]()
           var changed = false
           for (tree <- body) {
-            newBody += tree
             tree match {
-              case _: DefTree =>
+              case decl: DefDef =>
                 needTrees.get(tree.symbol) match {
                   case Some(impl) =>
                     changed = true
-                    newBody += localTyper.typedPos(impl.pos)(DefDef(impl, EmptyTree))
+                    val forwarderRhs = EmptyTree
+                    newBody += localTyper.typedPos(decl.pos)(DefDef(decl.symbol, forwarderRhs))
+
+                    // Look Ma, no substitution!
+                    val implDefDef = deriveDefDef(decl)(_ => decl.rhs).changeOwner(decl.symbol -> impl).setSymbol(impl)
+                    newBody += implDefDef
                   case None =>
+                    newBody += tree
                 }
               case _ =>
+                newBody += tree
             }
           }
           treeCopy.Template(tree, parents, self, transformTrees(if (changed) newBody.result() else body))
