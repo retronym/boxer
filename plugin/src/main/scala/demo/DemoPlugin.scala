@@ -58,7 +58,7 @@ class DemoPlugin(val global: Global) extends Plugin {
                   decl.newSyntheticValueParam(functionType(restpe :: Nil, UnitTpe), contName).setPos(decl.pos)
                 tp match {
                   case PolyType(tparams, restpe) =>
-                    PolyType(tparams, restpe)
+                    PolyType(tparams, cps(restpe))
                   case MethodType(params, restpe: MethodType) =>
                     MethodType(params, cps(restpe))
                   case MethodType(params, restpe) =>
