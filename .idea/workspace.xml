@@ -31,8 +31,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0cdfe52-60f1-4989-9551-b56c9db4ba73" name="Default Changelist" comment="Demo of debugging problem with custom async integration">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/root-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/root-build.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/async-macro/src/main/scala/demo/CompletableFutureAwait.scala" beforeDir="false" afterPath="$PROJECT_DIR$/async-macro/src/main/scala/demo/CompletableFutureAwait.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +92,7 @@
       <recent name="demo" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MacroDemo">
+  <component name="RunManager" selected="Application.OldAsyncMacroDemo">
     <configuration name="Demo" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="demo.Demo" />
       <module name="main" />
@@ -105,6 +108,19 @@
     </configuration>
     <configuration name="MacroDemo" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="demo.MacroDemo" />
+      <module name="main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OldAsyncMacroDemo" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="demo.OldAsyncMacroDemo" />
       <module name="main" />
       <extension name="coverage">
         <pattern>
@@ -133,9 +149,11 @@
       <item itemvalue="Application.Demo" />
       <item itemvalue="Remote.5009" />
       <item itemvalue="Application.MacroDemo" />
+      <item itemvalue="Application.OldAsyncMacroDemo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OldAsyncMacroDemo" />
         <item itemvalue="Application.MacroDemo" />
         <item itemvalue="Application.Demo" />
       </list>
@@ -151,7 +169,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585827378878</updated>
-      <workItem from="1585827381297" duration="5899000" />
+      <workItem from="1585827381297" duration="6580000" />
     </task>
     <task id="LOCAL-00001" summary="Demo of debugging problem with custom async integration">
       <created>1585832936279</created>
@@ -174,7 +192,28 @@
       <option name="project" value="LOCAL" />
       <updated>1585833029517</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Demo of debugging problem with custom async integration">
+      <created>1585833335478</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585833335478</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Demo of debugging problem with custom async integration">
+      <created>1585833422713</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585833422713</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Demo of debugging problem with custom async integration">
+      <created>1585833437743</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585833437743</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,50 +255,50 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="664" y="487" width="479" height="256" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.23.1920.1177@0.23.1920.1177" timestamp="1585831624333" />
-    <state x="666" y="322" key="#xdebugger.evaluate" timestamp="1585832321628">
+    <state x="666" y="322" key="#xdebugger.evaluate" timestamp="1585833369813">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="666" y="322" key="#xdebugger.evaluate/0.23.1920.1177@0.23.1920.1177" timestamp="1585832321628" />
-    <state width="1755" height="396" key="GridCell.Tab.0.bottom" timestamp="1585833248308">
+    <state x="666" y="322" key="#xdebugger.evaluate/0.23.1920.1177@0.23.1920.1177" timestamp="1585833369813" />
+    <state width="1755" height="396" key="GridCell.Tab.0.bottom" timestamp="1585833835027">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
-    <state width="1755" height="396" key="GridCell.Tab.0.center" timestamp="1585833248308">
+    <state width="1755" height="396" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835027" />
+    <state width="1755" height="396" key="GridCell.Tab.0.center" timestamp="1585833835026">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
-    <state width="1755" height="396" key="GridCell.Tab.0.left" timestamp="1585833248308">
+    <state width="1755" height="396" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835026" />
+    <state width="1755" height="396" key="GridCell.Tab.0.left" timestamp="1585833835026">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
-    <state width="1755" height="396" key="GridCell.Tab.0.right" timestamp="1585833248308">
+    <state width="1755" height="396" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835026" />
+    <state width="1755" height="396" key="GridCell.Tab.0.right" timestamp="1585833835026">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
-    <state width="1755" height="396" key="GridCell.Tab.1.bottom" timestamp="1585833248572">
+    <state width="1755" height="396" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835026" />
+    <state width="1755" height="396" key="GridCell.Tab.1.bottom" timestamp="1585833835028">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.1.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248572" />
-    <state width="1755" height="396" key="GridCell.Tab.1.center" timestamp="1585833248571">
+    <state width="1755" height="396" key="GridCell.Tab.1.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835028" />
+    <state width="1755" height="396" key="GridCell.Tab.1.center" timestamp="1585833835027">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.1.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
-    <state width="1755" height="396" key="GridCell.Tab.1.left" timestamp="1585833248571">
+    <state width="1755" height="396" key="GridCell.Tab.1.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835027" />
+    <state width="1755" height="396" key="GridCell.Tab.1.left" timestamp="1585833835027">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.1.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
-    <state width="1755" height="396" key="GridCell.Tab.1.right" timestamp="1585833248571">
+    <state width="1755" height="396" key="GridCell.Tab.1.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835027" />
+    <state width="1755" height="396" key="GridCell.Tab.1.right" timestamp="1585833835028">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="1755" height="396" key="GridCell.Tab.1.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
+    <state width="1755" height="396" key="GridCell.Tab.1.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833835028" />
     <state x="405" y="250" key="SettingsEditor" timestamp="1585829244992">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="405" y="250" key="SettingsEditor/0.23.1920.1177@0.23.1920.1177" timestamp="1585829244992" />
-    <state width="500" height="445" key="SwitcherDM" timestamp="1585833114362">
+    <state width="500" height="445" key="SwitcherDM" timestamp="1585833806058">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state width="500" height="445" key="SwitcherDM/0.23.1920.1177@0.23.1920.1177" timestamp="1585833114362" />
+    <state width="500" height="445" key="SwitcherDM/0.23.1920.1177@0.23.1920.1177" timestamp="1585833806058" />
     <state x="690" y="400" key="chooseDestDirectoryDialog" timestamp="1585831624251">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
@@ -268,10 +307,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="523" y="229" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1585829823997" />
-    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup" timestamp="1585833131353">
+    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup" timestamp="1585833455041">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1585833131353" />
+    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1585833455041" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -315,6 +354,16 @@
           <url>jar://$USER_HOME$/Library/Caches/Coursier/v1/https/scala-ci.typesafe.com/artifactory/scala-pr-validation-snapshots/org/scala-lang/scala-compiler/2.12.12-bin-1732cb0-SNAPSHOT/scala-compiler-2.12.12-bin-1732cb0-20200402.053737-1-sources.jar!/scala/tools/nsc/transform/async/AsyncNames.scala</url>
           <line>70</line>
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>55</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>77</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

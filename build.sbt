@@ -46,4 +46,9 @@ lazy val asyncMacro = Project(
 lazy val main = Project(
   id   = "main",
   base = file("main")
-).dependsOn(asyncMacro).settings(sharedSettings ++ usePluginSettings: _*).settings(scalacOptions += "-Xasync")
+).dependsOn(asyncMacro).settings(sharedSettings ++ usePluginSettings: _*).settings(
+  scalacOptions += "-Xasync",
+  libraryDependencies += "org.scala-lang.modules" %% "scala-async" % "0.10.0",
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value % "optional"
+)
+
