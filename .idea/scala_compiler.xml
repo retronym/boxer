@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <plugins>
+      <plugin path="$PROJECT_DIR$/plugin/target/scala-2.12/boxer_2.12-0.1.0-SNAPSHOT.jar" />
+    </plugins>
+    <profile name="sbt 1" modules="boxer_8604,root" />
+    <profile name="sbt 2" modules="main">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-Xlint" />
+        <parameter value="-Xasync" />
+        <parameter value="-Jdummy=1585832986535" />
+      </parameters>
+      <plugins>
+        <plugin path="$PROJECT_DIR$/plugin/target/scala-2.12/boxer_2.12-0.1.0-SNAPSHOT.jar" />
+      </plugins>
+    </profile>
+    <profile name="sbt 3" modules="plugin">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-Xfatal-warnings" />
+        <parameter value="-Xlint" />
+      </parameters>
+    </profile>
+    <profile name="sbt 4" modules="async-macro">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-Xlint" />
+      </parameters>
+    </profile>
+  </component>
+</project>

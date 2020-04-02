@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:topic" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:topic" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d0cdfe52-60f1-4989-9551-b56c9db4ba73" name="Default Changelist" comment="Demo of debugging problem with custom async integration">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/async-macro/src/main/scala/demo/CompletableFutureAwait.scala" beforeDir="false" afterPath="$PROJECT_DIR$/async-macro/src/main/scala/demo/CompletableFutureAwait.scala" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Scala Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1Zz20X4UFUovzyGmcQQPchJdcqa" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/main/src/main/scala/demo" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.scala.compiler.ScalaCompileServerForm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="demo" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.MacroDemo">
+    <configuration name="Demo" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="demo.Demo" />
+      <module name="main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="demp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MacroDemo" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="demo.MacroDemo" />
+      <module name="main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="5009" type="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5009" />
+      <option name="AUTO_RESTART" value="false" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="5009" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Demo" />
+      <item itemvalue="Remote.5009" />
+      <item itemvalue="Application.MacroDemo" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MacroDemo" />
+        <item itemvalue="Application.Demo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d0cdfe52-60f1-4989-9551-b56c9db4ba73" name="Default Changelist" comment="" />
+      <created>1585827378878</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585827378878</updated>
+      <workItem from="1585827381297" duration="5899000" />
+    </task>
+    <task id="LOCAL-00001" summary="Demo of debugging problem with custom async integration">
+      <created>1585832936279</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585832936279</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Demo of debugging problem with custom async integration">
+      <created>1585832950204</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585832950204</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Demo of debugging problem with custom async integration">
+      <created>1585833029517</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585833029517</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Demo of debugging problem with custom async integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Demo of debugging problem with custom async integration" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="641" y="373" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1585827960633">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="641" y="373" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1585827960633" />
+    <state x="368" y="273" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585829443832">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="368" y="273" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1585829443832" />
+    <state x="586" y="420" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585831331466">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="586" y="420" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1585831331466" />
+    <state x="707" y="312" key="#com.intellij.ide.util.MemberChooser" timestamp="1585833206768">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="707" y="312" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1585833206768" />
+    <state x="664" y="487" width="479" height="256" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1585831624333">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="664" y="487" width="479" height="256" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.23.1920.1177@0.23.1920.1177" timestamp="1585831624333" />
+    <state x="666" y="322" key="#xdebugger.evaluate" timestamp="1585832321628">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="666" y="322" key="#xdebugger.evaluate/0.23.1920.1177@0.23.1920.1177" timestamp="1585832321628" />
+    <state width="1755" height="396" key="GridCell.Tab.0.bottom" timestamp="1585833248308">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
+    <state width="1755" height="396" key="GridCell.Tab.0.center" timestamp="1585833248308">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
+    <state width="1755" height="396" key="GridCell.Tab.0.left" timestamp="1585833248308">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
+    <state width="1755" height="396" key="GridCell.Tab.0.right" timestamp="1585833248308">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248308" />
+    <state width="1755" height="396" key="GridCell.Tab.1.bottom" timestamp="1585833248572">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.1.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248572" />
+    <state width="1755" height="396" key="GridCell.Tab.1.center" timestamp="1585833248571">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.1.center/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
+    <state width="1755" height="396" key="GridCell.Tab.1.left" timestamp="1585833248571">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.1.left/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
+    <state width="1755" height="396" key="GridCell.Tab.1.right" timestamp="1585833248571">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1755" height="396" key="GridCell.Tab.1.right/0.23.1920.1177@0.23.1920.1177" timestamp="1585833248571" />
+    <state x="405" y="250" key="SettingsEditor" timestamp="1585829244992">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="405" y="250" key="SettingsEditor/0.23.1920.1177@0.23.1920.1177" timestamp="1585829244992" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1585833114362">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.23.1920.1177@0.23.1920.1177" timestamp="1585833114362" />
+    <state x="690" y="400" key="chooseDestDirectoryDialog" timestamp="1585831624251">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="690" y="400" key="chooseDestDirectoryDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1585831624251" />
+    <state x="523" y="229" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585829823997">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="523" y="229" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1585829823997" />
+    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup" timestamp="1585833131353">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="568" y="288" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1585833131353" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>8</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>12</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>13</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>14</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>16</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>21</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/main/src/main/scala/demo/Demo.scala</url>
+          <line>42</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>jar://$USER_HOME$/Library/Caches/Coursier/v1/https/scala-ci.typesafe.com/artifactory/scala-pr-validation-snapshots/org/scala-lang/scala-compiler/2.12.12-bin-1732cb0-SNAPSHOT/scala-compiler-2.12.12-bin-1732cb0-20200402.053737-1-sources.jar!/scala/tools/nsc/transform/async/AsyncNames.scala</url>
+          <line>70</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

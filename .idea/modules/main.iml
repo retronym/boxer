@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="main [file:/Users/jz/code/boxer/]" external.linked.project.path="$MODULE_DIR$/../../main" external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_12">
+    <output url="file://$MODULE_DIR$/../../main/target/scala-2.12/classes" />
+    <output-test url="file://$MODULE_DIR$/../../main/target/scala-2.12/test-classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../main">
+      <sourceFolder url="file://$MODULE_DIR$/../../main/src/main/scala" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../main/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="async-macro" exported="" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.12-bin-e53019e-SNAPSHOT:jar" level="project" />
+  </component>
+</module>
